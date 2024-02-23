@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from group import Group
 import unittest
 
 class UntitledTestCase(unittest.TestCase):
@@ -18,7 +19,7 @@ class UntitledTestCase(unittest.TestCase):
         self.open_home_page(driver)
         self.login(driver, username="admin", password="secret")
         self.open_groups_page(driver)
-        self.create_group(driver, name="zalupa", header="asdf", footer="fefef")
+        self.create_group(driver, Group(name="zalupa", header="asdf", footer="fefef"))
         self.return_to_groups(driver)
         self.logout(driver)
 
@@ -27,7 +28,7 @@ class UntitledTestCase(unittest.TestCase):
         self.open_home_page(driver)
         self.login(driver, username="admin", password="secret")
         self.open_groups_page(driver)
-        self.create_group(driver, name="", header="", footer="")
+        self.create_group(driver, Group(name="", header="", footer=""))
         self.return_to_groups(driver)
         self.logout(driver)
 
@@ -37,17 +38,17 @@ class UntitledTestCase(unittest.TestCase):
     def return_to_groups(self, driver):
         driver.find_element(By.LINK_TEXT, "group page").click()
 
-    def create_group(self, driver, name, header, footer):
+    def create_group(self, driver, group):
         # init group creation
         driver.find_element(By.NAME, "new").click()
         # fill group form
         driver.find_element(By.NAME, "group_name").click()
         driver.find_element(By.NAME, "group_name").clear()
-        driver.find_element(By.NAME, "group_name").send_keys(name)
+        driver.find_element(By.NAME, "group_name").send_keys(group.name)
         driver.find_element(By.NAME, "group_header").clear()
-        driver.find_element(By.NAME, "group_header").send_keys(header)
+        driver.find_element(By.NAME, "group_header").send_keys(group.header)
         driver.find_element(By.NAME, "group_footer").clear()
-        driver.find_element(By.NAME, "group_footer").send_keys(footer)
+        driver.find_element(By.NAME, "group_footer").send_keys(group.footer)
         # submit creation
         driver.find_element(By.NAME, "submit").click()
 
