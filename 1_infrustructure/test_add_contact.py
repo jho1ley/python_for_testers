@@ -16,18 +16,14 @@ class UntitledTestCase(unittest.TestCase):
 
     def test_add_contact(self):
         driver = self.driver
-        self.open_home_page(driver)
         self.login(driver, username="admin", password="secret")
         self.create_contact(driver, Contact(firstname="al", lastname="vs", nickname="jh", company="un", address="Z1B", home="2234",mobile="799999", email="asdf@asdf.e"))
-        self.return_home_page(driver)
         self.logout(driver)
 
     def test_add_blank_contact(self):
         driver = self.driver
-        self.open_home_page(driver)
         self.login(driver, username="admin", password="secret")
         self.create_contact(driver, Contact(firstname="", lastname="", nickname="", company="", address="", home="",mobile="", email=""))
-        self.return_home_page(driver)
         self.logout(driver)
 
     def logout(self, driver):
@@ -73,8 +69,10 @@ class UntitledTestCase(unittest.TestCase):
         driver.find_element(By.NAME, "email").send_keys(contact.email)
         # saving contact
         driver.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
+        self.return_home_page(driver)
 
     def login(self, driver, username, password):
+        self.open_home_page(driver)
         driver.find_element(By.NAME, "user").clear()
         driver.find_element(By.NAME, "user").send_keys(username)
         driver.find_element(By.NAME, "pass").clear()
