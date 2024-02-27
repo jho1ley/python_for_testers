@@ -28,7 +28,7 @@ class Application:
         self.open_groups_page()
         # init group creation
         driver.find_element(By.NAME, "new").click()
-        # fill group form
+        # fill group forms
         driver.find_element(By.NAME, "group_name").click()
         driver.find_element(By.NAME, "group_name").clear()
         driver.find_element(By.NAME, "group_name").send_keys(group.name)
