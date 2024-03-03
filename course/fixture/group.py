@@ -38,3 +38,12 @@ class GroupHelper:
         #submit deletion
         driver.find_element(By.NAME, "delete").click()
         self.return_to_groups()
+
+    def edit_first_group(self):
+        driver = self.app.driver
+        self.open_groups_page()
+        # select first group
+        driver.find_element(By.NAME, "selected[]").click()
+        driver.find_element(By.NAME, "edit").click()
+        driver.find_element(By.NAME, "update").click()
+        self.return_to_groups()
