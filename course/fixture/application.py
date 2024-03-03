@@ -2,6 +2,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from fixture.session import SessionHelper
+from fixture.group import GroupHelper
+
 
 class Application:
 
@@ -12,31 +14,11 @@ class Application:
         self.verificationErrors = []
         self.accept_next_alert = True
         self.session = SessionHelper(self)
+        self.group = GroupHelper(self)
 
     def return_home_page(self, driver):
         driver = self.driver
         driver.find_element(By.LINK_TEXT, "home page").click()
-
-    def return_to_groups(self):
-        driver = self.driver
-        driver.find_element(By.LINK_TEXT, "group page").click()
-
-    def create_group(self, group):
-        driver = self.driver
-        self.open_groups_page()
-        # init group creation
-        driver.find_element(By.NAME, "new").click()
-        # fill group forms
-        driver.find_element(By.NAME, "group_name").click()
-        driver.find_element(By.NAME, "group_name").clear()
-        driver.find_element(By.NAME, "group_name").send_keys(group.name)
-        driver.find_element(By.NAME, "group_header").clear()
-        driver.find_element(By.NAME, "group_header").send_keys(group.header)
-        driver.find_element(By.NAME, "group_footer").clear()
-        driver.find_element(By.NAME, "group_footer").send_keys(group.footer)
-        # submit creation
-        driver.find_element(By.NAME, "submit").click()
-        self.return_to_groups()
 
     def create_contact(self, contact):
         driver = self.driver
@@ -77,10 +59,6 @@ class Application:
         # saving contact
         driver.find_element(By.XPATH, "//div[@id='content']/form/input[21]").click()
         self.return_home_page(driver)
-
-    def open_groups_page(self):
-        driver = self.driver
-        driver.find_element(By.LINK_TEXT, "groups").click()
 
     def open_home_page(self):
         driver = self.driver
